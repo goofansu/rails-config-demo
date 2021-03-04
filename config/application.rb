@@ -7,6 +7,19 @@ require "active_model/railtie"
 require "active_record/railtie"
 # require "active_storage/engine"
 require "action_controller/railtie"
+
+ActionController::Railtie.initializer "puts default_protect_from_forgery when ActionController::Base is loaded" do
+  ActiveSupport.on_load(:action_controller_base) do
+    puts "default_protect_from_forgery is #{Rails.application.config.action_controller.default_protect_from_forgery}, expected: false"
+  end
+end
+
+ActionController::Railtie.initializer "puts default_protect_from_forgery when application is initialized" do
+  ActiveSupport.on_load(:after_initialize) do
+    puts "default_protect_from_forgery is #{Rails.application.config.action_controller.default_protect_from_forgery}, expected: false"
+  end
+end
+
 # require "action_mailer/railtie"
 # require "action_mailbox/engine"
 # require "action_text/engine"
@@ -34,5 +47,31 @@ module RailsConfig
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.before_configuration do
+      puts "before_configuration"
+    end
+
+    config.before_initialize do
+      puts "before_initialize"
+    end
+
+    config.after_initialize do
+      puts "after_initialize"
+    end
+
+    initializer "before_initialize hook" do |app|
+      ActiveSupport.on_load(:before_initialize) do
+        puts "ActiveSupport.on_load(:before_initialize) runs at the end of before_initialize"
+      end
+    end
+
+    initializer "after_initialize hook" do |app|
+      ActiveSupport.on_load(:after_initialize) do
+        puts "ActiveSupport.on_load(:after_initialize) runs at the end of after_initialize"
+      end
+    end
+
+    puts "application.rb loaded"
   end
 end
