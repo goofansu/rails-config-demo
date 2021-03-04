@@ -172,12 +172,13 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wechat (0.12.2)
-      activesupport (>= 3.2, < 7)
+    wechat (0.13.0)
+      activesupport (>= 6.0, < 7)
       http (>= 1.0.4, < 5)
       nokogiri (>= 1.6.0)
       rexml
       thor
+      zeitwerk (~> 2.4)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -191,7 +192,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   sqlite3 (~> 1.4)
   tzinfo-data
-  wechat (~> 0.12.0)
+  wechat (~> 0.13.0)
 
 RUBY VERSION
    ruby 2.6.5p114
